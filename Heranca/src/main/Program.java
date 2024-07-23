@@ -2,19 +2,23 @@ package main;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import entites.ImportedProduct;
-import entites.Product;
-import entites.UsedProduct;
+
+import entities.ImportedProduct;
+import entities.Product;
+import entities.UsedProduct;
 
 public class Program {
 	public static void main(String[] args) throws ParseException {
 
 		Scanner sc = new Scanner(System.in);
 		Locale.setDefault(Locale.US);
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		List<Product> items = new ArrayList<>();
 
 		System.out.print("Enter the number of products: ");
 		int quantity = sc.nextInt();
@@ -27,23 +31,29 @@ public class Program {
 			String name = sc.next();
 			System.out.print("Price: ");
 			Double price = sc.nextDouble();
+			
 			if (choice == 'i') {
 				System.out.print("Customs fee: ");
 				Double customsFee = sc.nextDouble();
 				Product pd = new ImportedProduct(name, price, customsFee);
-				pd.addItem(pd);
+				items.add(pd);
 			} else if (choice == 'u') {
 				System.out.print("Manufacture date (DD/MM/YYYY): ");
 				String mDate = sc.next();
-				Date date = sdf1.parse(mDate);
+				Date date = sdf.parse(mDate);
 				Product pd = new UsedProduct(name, price, date);
-				pd.addItem(pd);
+				items.add(pd);
 			} else {
 				Product pd = new Product(name, price);
-				pd.addItem(pd);
+				items.add(pd);
 			}
 		}
-		System.out.println(new Product().toString());
+		
+		System.out.println("\nPRICE TAGS:");
+		
+		for (Product c : items) {
+			System.out.println(c.priceTag());
+		}
 
 		sc.close();
 
