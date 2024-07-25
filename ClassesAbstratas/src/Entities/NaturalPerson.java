@@ -31,7 +31,7 @@ public class NaturalPerson extends Person {
 				taxes -= healthExpenses * 0.5;
 			}
 
-		} else if (getAnualIncome() >= 20000 && healthExpenses != 0) {
+		} else if (getAnualIncome() >= 20000) {
 			taxes = getAnualIncome() * 0.25;
 			if (healthExpenses != 0) {
 				taxes -= healthExpenses * 0.5;
