@@ -49,7 +49,7 @@ public class Program {
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-
+	sc.close();
 	}
 
 }
