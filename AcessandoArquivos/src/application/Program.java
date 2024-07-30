@@ -49,6 +49,12 @@ public class Program {
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
+<<<<<<< HEAD
 		sc.close();
 		}
+=======
+	sc.close();
+	}
+
+>>>>>>> 42c11a5b483f972907a206f2e414cc2abcdc2e54
 }
