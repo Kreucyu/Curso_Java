@@ -11,8 +11,8 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import Services.Filter;
 import entities.Employee;
+import services.Filter;
 
 public class Program {
 
@@ -43,6 +43,7 @@ public class Program {
 		} catch (IOException e ) {
 			System.out.println(e.getMessage());
 		}
+		sc.close();
 
 	} 
 
