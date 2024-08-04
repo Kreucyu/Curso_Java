@@ -25,7 +25,7 @@ public class Program {
 			e.printStackTrace();
 		} finally {
 			DB.closeStatement(st);
-			DB.closeResetSet(rs);
+			DB.closeResultSet(rs);
 		}
 
 	}
