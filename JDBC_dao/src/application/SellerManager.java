@@ -31,11 +31,11 @@ public class SellerManager {
 				Program.clearScreen();
 				System.out.println("\nO você que deseja fazer?\n");
 				System.out.println("1 - Inserir novo vendedor");
-				System.out.println("2 - Atualizar os dados de um funcionário");
+				System.out.println("2 - Atualizar os dados de um vendedor");
 				System.out.println("3 - Deletar um vendedor");
 				System.out.println("4 - Encontrar um vendedor por id");
 				System.out.println("5 - Encontrar um vendedor por departamento");
-				System.out.println("6 - Listar todos os funcionários");
+				System.out.println("6 - Listar todos os vendedores");
 				System.out.println("7 - Retornar a tela principal");
 				System.out.println("8 - Sair do programa\n");
 				Integer option = sc.nextInt();
@@ -345,6 +345,9 @@ public class SellerManager {
 		Program.clearScreen();
 		list = sellerDao.findAll();
 		list.forEach(System.out::println);
+		if (list.isEmpty()) {
+			System.out.println("Nenhum vendedor listado!");
+		}
 		System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
 		String chReturn = sc.next();
 		sc.nextLine();

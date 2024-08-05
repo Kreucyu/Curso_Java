@@ -241,6 +241,9 @@ public class DepartmentManager {
 		Program.clearScreen();
 		listD = depDao.findAll();
 		listD.forEach(System.out::println);
+		if (list.isEmpty()) {
+			System.out.println("Nenhum departamento localizado!");
+		}
 		System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
 		String chReturn = sc.next();
 		sc.nextLine();
