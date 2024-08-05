@@ -30,13 +30,14 @@ public class SellerDaoJDBC implements SellerDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO seller (Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES (?, ?, ?, ?, ?)",
+					"INSERT INTO seller (Id, Name, Email, BirthDate, BaseSalary, DepartmentId) VALUES (?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
-			st.setString(1, seller.getName());
-			st.setString(2, seller.getEmail());
-			st.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
-			st.setDouble(4, seller.getBaseSalary());
-			st.setInt(5, seller.getDepartment().getId());
+			st.setInt(1, seller.getId());
+			st.setString(2, seller.getName());
+			st.setString(3, seller.getEmail());
+			st.setDate(4, new java.sql.Date(seller.getBirthDate().getTime()));
+			st.setDouble(5, seller.getBaseSalary());
+			st.setInt(6, seller.getDepartment().getId());
 
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected > 0) {
@@ -62,13 +63,14 @@ public class SellerDaoJDBC implements SellerDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"UPDATE seller SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? WHERE Id = ?");
-			st.setString(1, seller.getName());
-			st.setString(2, seller.getEmail());
-			st.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
-			st.setDouble(4, seller.getBaseSalary());
-			st.setInt(5, seller.getDepartment().getId());
-			st.setInt(6, seller.getId());
+					"UPDATE seller SET Id = ?, Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? WHERE Id = ?");
+			st.setInt(1, seller.getId());
+			st.setString(2, seller.getName());
+			st.setString(3, seller.getEmail());
+			st.setDate(4, new java.sql.Date(seller.getBirthDate().getTime()));
+			st.setDouble(5, seller.getBaseSalary());
+			st.setInt(6, seller.getDepartment().getId());
+			st.setInt(7, seller.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
