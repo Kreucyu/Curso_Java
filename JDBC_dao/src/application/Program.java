@@ -108,6 +108,11 @@ public class Program {
 		}
 	}
 	
+	public static void listDelay() throws InterruptedException {
+		long delay = System.currentTimeMillis();
+		Thread.sleep(60000);
+	}
+	
 	public static void delay() throws InterruptedException {
 		long delay = System.currentTimeMillis();
 		Thread.sleep(2000);

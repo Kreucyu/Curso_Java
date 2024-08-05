@@ -33,7 +33,7 @@ public class DepartmentManager {
 				System.out.println("3 - Deletar um departamento");
 				System.out.println("4 - Encontrar um departamento por id");
 				System.out.println("5 - Listar todos os departamentos");
-				System.out.println("6 - Retornar a tela escolhas");
+				System.out.println("6 - Retornar a tela principal");
 				System.out.println("7 - Sair do programa\n");
 				Integer option = sc.nextInt();
 				if (option == 1 || option == 2 || option == 3 || option == 4 || option == 5 || option == 6
@@ -102,7 +102,7 @@ public class DepartmentManager {
 				sc.nextLine();
 				Department dep = new Department(id, name);
 				depDao.insert(dep);
-				System.out.println("Inserido! Id: " + dep.getId());
+				System.out.println("\nInserido! Id: " + dep.getId());
 				try {
 					Program.delay();
 				} catch (InterruptedException e) {
@@ -128,15 +128,15 @@ public class DepartmentManager {
 			try {
 				Program.clearScreen();
 				System.out.print("\nQual o id do departamento que você deseja atualizar? ");
-				Integer id = sc.nextInt();
+				Integer firstId = sc.nextInt();
 				choiceTrue = true;
-				Department dept = depDao.findById(id);
+				Department dept = depDao.findById(firstId);
 				System.out.print("\nDeseja atualizar o id do departamento (s/n)? ");
 				String chId = sc.next();
 				sc.nextLine();
 				if (chId.toLowerCase().charAt(0) == 's') {
 					System.out.print("\nQual o novo id do departamento? ");
-					id = sc.nextInt();
+					Integer id = sc.nextInt();
 					choiceTrue = true;
 					dept.setId(id);
 				}
@@ -149,8 +149,8 @@ public class DepartmentManager {
 					sc.nextLine();
 					dept.setName(name);
 				}
-				depDao.update(dept);
-				System.out.println("Atualizado! Id: " + dept.getId());
+				depDao.update(dept, firstId);
+				System.out.println("\nAtualizado! Id: " + dept.getId());
 				try {
 					Program.delay();
 				} catch (InterruptedException e) {
@@ -179,7 +179,7 @@ public class DepartmentManager {
 				Integer idDelete = sc.nextInt();
 				choiceTrue = true;
 				depDao.deleteById(idDelete);
-				System.out.println("Deletado! id: " + idDelete);
+				System.out.println("\nDeletado! id: " + idDelete);
 				try {
 					Program.delay();
 				} catch (InterruptedException e) {
@@ -208,13 +208,21 @@ public class DepartmentManager {
 				Integer id = sc.nextInt();
 				choiceTrue = true;
 				Department dept = depDao.findById(id);
+				System.out.println();
 				System.out.println(dept);
-				try {
-					Program.delay();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
+				String chReturn = sc.next();
+				sc.nextLine();
+				if (chReturn.toLowerCase().charAt(0) == 's') {
+					Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
+				} else {
+					try {
+						Program.listDelay();
+						Program.exit(sc);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
 			} catch (InputMismatchException e) {
 				System.out.println("Entrada inválida!" + "\nPressione enter para prosseguir");
 				sc.nextLine();
@@ -233,11 +241,18 @@ public class DepartmentManager {
 		Program.clearScreen();
 		listD = depDao.findAll();
 		listD.forEach(System.out::println);
-		try {
-			Program.delay();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
+		String chReturn = sc.next();
+		sc.nextLine();
+		if (chReturn.toLowerCase().charAt(0) == 's') {
+			Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
+		} else {
+			try {
+				Program.listDelay();
+				Program.exit(sc);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
 	}
 }

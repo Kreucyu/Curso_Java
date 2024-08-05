@@ -34,9 +34,9 @@ public class SellerManager {
 				System.out.println("2 - Atualizar os dados de um funcionário");
 				System.out.println("3 - Deletar um vendedor");
 				System.out.println("4 - Encontrar um vendedor por id");
-				System.out.println("5 - Ecnontrar um vendedor por departamento");
+				System.out.println("5 - Encontrar um vendedor por departamento");
 				System.out.println("6 - Listar todos os funcionários");
-				System.out.println("7 - Retornar a tela escolhas");
+				System.out.println("7 - Retornar a tela principal");
 				System.out.println("8 - Sair do programa\n");
 				Integer option = sc.nextInt();
 				if (option == 1 || option == 2 || option == 3 || option == 4 || option == 5 || option == 6
@@ -241,7 +241,7 @@ public class SellerManager {
 				Integer idDelete = sc.nextInt();
 				choiceTrue = true;
 				sellerDao.deleteById(idDelete);
-				System.out.println("Deletado! id: " + idDelete);
+				System.out.println("\nDeletado! id: " + idDelete);
 				try {
 					Program.delay();
 				} catch (InterruptedException e) {
@@ -270,13 +270,21 @@ public class SellerManager {
 				Integer idSearch = sc.nextInt();
 				choiceTrue = true;
 				Seller seller = sellerDao.findById(idSearch);
+				System.out.println();
 				System.out.println(seller);
-				try {
-					Program.delay();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
+				String chReturn = sc.next();
+				sc.nextLine();
+				if (chReturn.toLowerCase().charAt(0) == 's') {
+					Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
+				} else {
+					try {
+						Program.listDelay();
+						Program.exit(sc);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
 			} catch (InputMismatchException e) {
 				System.out.println("Entrada inválida!" + "\nPressione enter para prosseguir");
 				sc.nextLine();
@@ -296,34 +304,29 @@ public class SellerManager {
 		while (!choiceTrue) {
 			try {
 				Program.clearScreen();
-				System.out.print("\nDeseja procurar o departamento por id ou nome? ");
-				String c = sc.next();
-				sc.nextLine();
-				do {
-					if (c.toLowerCase().charAt(0) == 'i') {
-						System.out.print("\nQual o id do departamento? ");
-						Integer id = sc.nextInt();
-						choiceTrue = true;
-						Department dep = new Department(id, null);
-						list = sellerDao.findByDepartment(dep);
-						list.forEach(System.out::println);
-					} else if (c.toLowerCase().charAt(0) == 'n') {
-						System.out.print("\nQual o nome do departamento? ");
-						String nameD = sc.next();
-						Department dep = new Department(null, nameD);
-						list = sellerDao.findByDepartment(dep);
-						list.forEach(System.out::println);
-					} else {
-						System.out.println("\nOpção inválida, tente novamente!");
-						c = sc.next();
-					}
-				} while (c.toLowerCase().charAt(0) != 'i' || c.toLowerCase().charAt(0) != 'n');
-				try {
-					Program.delay();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				System.out.print("\nQual o id do departamento? ");
+				Integer id = sc.nextInt();
+				choiceTrue = true;
+				Department dep = new Department(id, null);
+				System.out.println();
+				list = sellerDao.findByDepartment(dep);
+				list.forEach(System.out::println);
+				if (list.isEmpty()) {
+					System.out.println("Departamento vazio!");
 				}
-				Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
+				System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
+				String chReturn = sc.next();
+				sc.nextLine();
+				if (chReturn.toLowerCase().charAt(0) == 's') {
+					Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
+				} else {
+					try {
+						Program.listDelay();
+						Program.exit(sc);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			} catch (InputMismatchException e) {
 				System.out.println("Entrada inválida!" + "\nPressione enter para prosseguir");
 				sc.nextLine();
@@ -342,12 +345,19 @@ public class SellerManager {
 		Program.clearScreen();
 		list = sellerDao.findAll();
 		list.forEach(System.out::println);
-		try {
-			Program.delay();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		System.out.print("\nRetornar (s/n)? (obs: opção 'n' fará com que o programa encerre em 1 minuto) ");
+		String chReturn = sc.next();
+		sc.nextLine();
+		if (chReturn.toLowerCase().charAt(0) == 's') {
+			Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
+		} else {
+			try {
+				Program.listDelay();
+				Program.exit(sc);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		Program.tryAgain(sc, sdf, sellerDao, list, depDao, listD, choiceTrue);
 	}
 
 }
